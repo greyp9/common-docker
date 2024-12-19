@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM centos:6.9
+FROM centos:6.10
 
 ARG COMMIT_ID=unknown
 LABEL io.confluent.docker.git.id=$COMMIT_ID
@@ -22,15 +22,22 @@ LABEL io.confluent.docker.build.number=$BUILD_NUMBER
 LABEL io.confluent.docker=true
 LABEL description="Confluent Containerized KDC"
 
+RUN sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/CentOS-*.repo
+RUN sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/CentOS-*.repo
+RUN sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/CentOS-*.repo
+
+RUN yum -y update && yum clean all
+
 # EPEL
-RUN yum install -y wget
-RUN cd /tmp && wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
-RUN rpm -ivh /tmp/epel-release-latest-6.noarch.rpm
+# RUN yum install -y wget
+# RUN cd /tmp && wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
+# RUN rpm -ivh /tmp/epel-release-latest-6.noarch.rpm
 
 # kerberos
 RUN yum install -y krb5-server krb5-libs krb5-auth-dialog krb5-workstation
 
 EXPOSE 88 749
+# EXPOSE 88 749 88/udp
 
 ADD ./config.sh /config.sh
 

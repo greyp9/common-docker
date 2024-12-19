@@ -1,0 +1,11 @@
+---
+services:
+  kerberos:
+    image: greyp9/kerberos:2412
+    environment:
+      FOO: bar
+    volumes:
+    - ${KAFKA_SASL_SECRETS_DIR}:/tmp/keytab
+    - /dev/urandom:/dev/random
+    network_mode: host
+

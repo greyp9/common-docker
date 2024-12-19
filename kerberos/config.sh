@@ -11,7 +11,7 @@
 
 
 create_config() {
-  : ${KDC_ADDRESS:=$(hostname -f)}
+  : ${KDC_ADDRESS:=kafka-sasl}
 
   cat>/etc/krb5.conf<<EOF
 [logging]
@@ -32,7 +32,8 @@ create_config() {
  # have been warned.
  default_tkt_enctypes = des-cbc-md5 des-cbc-crc des3-cbc-sha1
  default_tgs_enctypes = des-cbc-md5 des-cbc-crc des3-cbc-sha1
- permitted_enctypes = des-cbc-md5 des-cbc-crc des3-cbc-sha1
+ permitted_enctypes = des-cbc-md5 des-cbc-crc des3-cbc-sha1 arcfour-hmac des3-hmac-sha1 des-cbc-crc
+ allow_weak_crypto = true
 
 [realms]
  $REALM = {
