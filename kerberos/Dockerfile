@@ -36,8 +36,9 @@ RUN yum -y update && yum clean all
 # kerberos
 RUN yum install -y krb5-server krb5-libs krb5-auth-dialog krb5-workstation
 
-EXPOSE 88 749
-# EXPOSE 88 749 88/udp
+RUN yum list installed | grep "krb"
+
+EXPOSE 88 749 88/udp 8888 749 8888/udp
 
 ADD ./config.sh /config.sh
 

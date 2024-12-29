@@ -11,7 +11,7 @@
 
 
 create_config() {
-  : ${KDC_ADDRESS:=kafka-sasl}
+  : ${KDC_ADDRESS:=kafka-sasl-lo}
 
   cat>/etc/krb5.conf<<EOF
 [logging]
@@ -30,9 +30,9 @@ create_config() {
  # require the enhanced security JCE policy file to be installed. You should
  # NOT run with this configuration in production or any real environment. You
  # have been warned.
- default_tkt_enctypes = des-cbc-md5 des-cbc-crc des3-cbc-sha1
- default_tgs_enctypes = des-cbc-md5 des-cbc-crc des3-cbc-sha1
- permitted_enctypes = des-cbc-md5 des-cbc-crc des3-cbc-sha1 arcfour-hmac des3-hmac-sha1 des-cbc-crc
+ default_tgs_enctypes = aes256-cts aes128-cts arcfour-hmac-md5 des-cbc-md5 des-cbc-crc des3-cbc-sha1
+ default_tkt_enctypes = aes256-cts aes128-cts arcfour-hmac-md5 des-cbc-md5 des-cbc-crc des3-cbc-sha1
+ permitted_enctypes =   aes256-cts aes128-cts arcfour-hmac-md5 des-cbc-md5 des-cbc-crc des3-cbc-sha1
  allow_weak_crypto = true
 
 [realms]
@@ -48,8 +48,8 @@ EOF
 
 cat>/var/kerberos/krb5kdc/kdc.conf<<EOF
 [kdcdefaults]
- kdc_ports = 88
- kdc_tcp_ports = 88
+ kdc_ports = 88,8888
+ kdc_tcp_ports = 88,8888
 
 [realms]
  $REALM = {

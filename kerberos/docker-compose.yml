@@ -2,10 +2,13 @@
 services:
   kerberos:
     image: greyp9/kerberos:2412
+    ports:
+      - "8888:8888/tcp"
+      - "8888:8888/udp"
     environment:
       FOO: bar
     volumes:
     - ${KAFKA_SASL_SECRETS_DIR}:/tmp/keytab
     - /dev/urandom:/dev/random
-    network_mode: host
+    # network_mode: host
 
