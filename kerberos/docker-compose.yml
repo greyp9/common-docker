@@ -1,7 +1,13 @@
 ---
+networks:
+  eden:
+    external: true
 services:
   kerberos:
     image: greyp9/kerberos:2412
+    hostname: kerberos
+    networks:
+      - eden
     ports:
       - "8888:8888/tcp"
       - "8888:8888/udp"
@@ -10,5 +16,3 @@ services:
     volumes:
     - ${KAFKA_SASL_SECRETS_DIR}:/tmp/keytab
     - /dev/urandom:/dev/random
-    # network_mode: host
-

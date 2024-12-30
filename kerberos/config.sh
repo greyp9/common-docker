@@ -11,7 +11,7 @@
 
 
 create_config() {
-  : ${KDC_ADDRESS:=kafka-sasl-lo}
+  : ${KDC_ADDRESS:=kerberos}
 
   cat>/etc/krb5.conf<<EOF
 [logging]
