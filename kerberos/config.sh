@@ -30,9 +30,9 @@ create_config() {
  # require the enhanced security JCE policy file to be installed. You should
  # NOT run with this configuration in production or any real environment. You
  # have been warned.
- default_tgs_enctypes = aes256-cts aes128-cts arcfour-hmac-md5 des-cbc-md5 des-cbc-crc des3-cbc-sha1
- default_tkt_enctypes = aes256-cts aes128-cts arcfour-hmac-md5 des-cbc-md5 des-cbc-crc des3-cbc-sha1
- permitted_enctypes =   aes256-cts aes128-cts arcfour-hmac-md5 des-cbc-md5 des-cbc-crc des3-cbc-sha1
+ default_tgs_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 arcfour-hmac-md5 des-cbc-md5 des-cbc-crc des3-cbc-sha1
+ default_tkt_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 arcfour-hmac-md5 des-cbc-md5 des-cbc-crc des3-cbc-sha1
+ permitted_enctypes =   aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 arcfour-hmac-md5 des-cbc-md5 des-cbc-crc des3-cbc-sha1
  allow_weak_crypto = true
 
 [realms]
@@ -61,7 +61,7 @@ cat>/var/kerberos/krb5kdc/kdc.conf<<EOF
   # NOT run with this configuration in production or any real environment. You
   # have been warned.
   master_key_type = des3-hmac-sha1
-  supported_enctypes = arcfour-hmac:normal des3-hmac-sha1:normal des-cbc-crc:normal des:normal des:v4 des:norealm des:onlyrealm des:afs3
+  supported_enctypes = aes256-cts-hmac-sha1-96:normal aes128-cts-hmac-sha1-96:normal arcfour-hmac:normal des3-hmac-sha1:normal des-cbc-crc:normal des:normal des:v4 des:norealm des:onlyrealm des:afs3
   default_principal_flags = +preauth
  }
 EOF
